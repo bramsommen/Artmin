@@ -29,9 +29,24 @@
             .item{
                 height: 150px;  
             }
-
-
-
+            
+            .logo {
+                -ms-flex: 0 0 200px;
+                flex: 0 0 200px;
+                min-width: 70px;
+            }
+            
+            .logo img{
+                margin: 5px;
+                width: 100%;
+                width: 100%\9;
+            }
+            
+            .info {
+                width: 90%;
+            }
+            
+            
         </style>
 
 
@@ -75,11 +90,30 @@
                     <div class="modal-content shadow">
 
                         <div onclick="location.href = '<c:url value='/events/opn-events-${artist.id}'/>';" style="cursor: pointer;">
+                            <!--
+                            <div class="logo">
+                                <img src="${artist.logoUrl}" alt="logo" class="img-fluid logo"/>
+                            </div>
 
-                            <div class="text-center">
+                            <div class="text-center info">
                                 <h1 align="center"><c:out value="${artist.name}"/></h1>   
                                 <h6 align="center"><c:out value="${artist.description}"/></h6>  
                             </div> 
+                            -->
+                            
+                            <!-- Lets try -->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-3 logo">
+                                        <img src="${artist.logoUrl}" alt="logo" class="img-fluid"/>
+                                    </div>
+                                    <div class="col-9">
+                                        <h1 align="center"><c:out value="${artist.name}"/></h1>
+                                        <h6 align="center"><c:out value="${artist.description}"/></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end try -->
                         </div>
 
 
@@ -90,11 +124,11 @@
                                 <i class="material-icons small">edit</i>
                             </button>
 
-                                <!--
+                                
                             <button onclick="window.location.href = '<c:url value='/artists/delete-${artist.id}-artist'/>';" type="button" class="btn btn-danger">
                                 <i class="material-icons small">clear</i>
                             </button>  
-                                -->
+                                
 
 
 
