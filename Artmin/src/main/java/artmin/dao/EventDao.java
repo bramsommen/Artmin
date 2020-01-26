@@ -5,17 +5,17 @@
  */
 package artmin.dao;
 
-import artmin.model.Event;
-import artmin.model.EventType;
-import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import artmin.model.Event;
+import artmin.model.EventType;
 
 /**
  *

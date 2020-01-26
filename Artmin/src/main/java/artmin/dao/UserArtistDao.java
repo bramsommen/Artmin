@@ -1,12 +1,13 @@
 package artmin.dao;
 
-import artmin.model.Artist;
-import artmin.model.UserArtist;
-import artmin.model.UserArtistFK;
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import artmin.model.UserArtist;
+import artmin.model.UserArtistFK;
 
 @Repository("userArtistDao")  
 public class UserArtistDao extends AbstractDao<UserArtistFK,UserArtist>{
@@ -44,5 +45,10 @@ public class UserArtistDao extends AbstractDao<UserArtistFK,UserArtist>{
         criteria.add(Restrictions.eq("userID", userId));
         criteria.add(Restrictions.eq("role", role));
         return (List<UserArtist>) criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<UserArtist> findAllUserArtistsByArtistId(long artistId){
+        return (List<UserArtist>) createEntityCriteria().list();
     }
 }

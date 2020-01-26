@@ -57,4 +57,8 @@ public class UserArtistService {
         return dao.findAllUserArtistsByUserdIdAndRole(userId, artistId);
     }
 
+    public List<UserArtist> findAllUserArtistsByArtistId(Long artistId) {
+        return dao.findAllUserArtistsByArtistId(artistId);
+    }
+
 }

@@ -5,6 +5,13 @@
  */
 package artmin.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import artmin.dao.ClientDao;
 import artmin.dao.EventDao;
 import artmin.dao.EventLocationDao;
@@ -18,17 +25,6 @@ import artmin.model.EventType;
 import artmin.model.Note;
 import artmin.model.Payment;
 import artmin.model.Todo;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *

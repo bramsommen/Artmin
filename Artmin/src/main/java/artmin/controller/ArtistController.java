@@ -5,18 +5,25 @@
  */
 package artmin.controller;
 
-import artmin.model.Artist;
-import artmin.service.ArtistService;
-
 import java.util.List;
+import java.util.Set;
+
 import javax.swing.JOptionPane;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import artmin.model.Artist;
+import artmin.model.User;
+import artmin.service.ArtistService;
+import artmin.service.UserService;
 
 @Controller
 @RequestMapping("/artists")
@@ -24,6 +31,9 @@ public class ArtistController {
 
     @Autowired
     ArtistService artistService;
+
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = {"/new"}, method = RequestMethod.GET)
     public String newArtist(ModelMap model) {
@@ -33,6 +43,7 @@ public class ArtistController {
         return "artistnew"; //view r-team
     }
 
+    @Transactional
     @RequestMapping(value = {"/new"}, method = RequestMethod.POST)
     public String saveArtist(Artist artist, BindingResult result, ModelMap model) {
 
@@ -57,21 +68,59 @@ public class ArtistController {
         return this.listArtist(model); // Return overzicht events
     }
 
+    @Transactional
     @RequestMapping(value = {"/edit-{id}-artist"}, method = RequestMethod.GET)
     public String editArtist(@PathVariable Long id, ModelMap model) {
         Artist artist = artistService.findById(id);
+        Set<User> users = artistService.getAllMatchingUsers(id);
         model.addAttribute("artist", artist);
         model.addAttribute("edit", true);
+        model.addAttribute("users", users);
+        model.addAttribute("user", new User());
         return "artistnew";
     }
 
     @RequestMapping(value = {"/edit-{id}-artist"}, method = RequestMethod.POST)
-    public String updateArtist(Artist artist, BindingResult result, ModelMap model, @PathVariable int id) {
-
+    public String updateArtist(Artist artist, User user, BindingResult result, ModelMap model, @PathVariable int id) {
         artistService.updateArtist(artist);
-
         model.addAttribute("success", "Artist " + artist.getName() + " registered successfully");
         return this.listArtist(model); // Return overzicht events
+    }
+
+    // Deze methode wordt enkel aangesproken als je op de Add User knop duwt.
+    @RequestMapping(value = {"/edit-{id}-artist"}, method = RequestMethod.POST, params = "addUser")
+    public String addUserToArtist(User user, BindingResult result, ModelMap model, @PathVariable Long id) {
+        Artist artist = artistService.findById(id);
+        model.addAttribute("artist", artist);
+        model.addAttribute("edit", true);
+        
+        User userFromDb = userService.findByEmail(user.getEmail());
+        if (userFromDb != null && !artist.getUsers().contains(userFromDb)) {
+            artist.addUser(userFromDb);
+            artistService.saveOrUpdate(artist);
+        }
+        else {
+            System.out.println("Sending email to " +  user.getEmail());
+        }
+
+        return this.listArtist(model);
+    }
+
+    // Deze methode wordt enkel aangesproken als je op de Remove User knop duwt.
+    @RequestMapping(value = {"/edit-{id}-artist"}, method = RequestMethod.POST, params = "removeUser")
+    public String removeUserFromArtist(ModelMap model, @RequestParam(value="removeUser") Long userId,  @PathVariable Long id) {
+        Artist artist = artistService.findById(id);
+        User userToDelete = userService.findById(userId);
+
+        model.addAttribute("user", userToDelete);
+        model.addAttribute("artist", artist);
+        model.addAttribute("edit", true);
+
+        artist.removeUser(userToDelete);
+        userToDelete.getArtists().remove(artist);
+        artistService.saveOrUpdate(artist);
+
+        return this.listArtist(model);
     }
 
     @RequestMapping(value = {"/delete-{id}-artist"}, method = RequestMethod.GET)
@@ -84,6 +133,7 @@ public class ArtistController {
         return this.listArtist(model); // Return overzicht events
     }
 
+    @Transactional
     @RequestMapping(value = {"", "/list"}, method = RequestMethod.GET)
     public String listArtist(ModelMap model) {
         List<Artist> lstArtists = artistService.findAllArtists(); // ophalen gegevens uit database

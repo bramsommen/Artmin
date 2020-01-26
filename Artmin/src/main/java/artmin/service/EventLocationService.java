@@ -5,13 +5,14 @@
  */
 package artmin.service;
 
-import artmin.dao.EventLocationDao;
-import artmin.model.EventLocation;
-import artmin.model.EventType;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import artmin.dao.EventLocationDao;
+import artmin.model.EventLocation;
 
 /**
  *

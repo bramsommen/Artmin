@@ -5,13 +5,14 @@
  */
 package artmin.dao;
 
-import artmin.model.Payment;
-import artmin.model.Todo;
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import artmin.model.Payment;
 
 /**
  *

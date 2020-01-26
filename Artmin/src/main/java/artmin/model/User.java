@@ -3,6 +3,8 @@ package artmin.model;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,20 +12,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
- 
+
 import org.hibernate.validator.constraints.NotEmpty;
  
 @Entity
-@Table(name="users")
+@Table(name="Users")
 public class User {
- 
   //    Attributen
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -65,6 +64,15 @@ public class User {
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name="modUserID")
     private Set<Note> notes;
+
+    @ManyToMany(mappedBy = "users",
+    fetch = FetchType.EAGER,
+    cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Artist> artists = new HashSet<>();
+
+    public Set<Artist> getArtists() {
+        return artists;
+    }
 
 //    Properties
 
@@ -155,6 +163,7 @@ public class User {
     public void setNotes(Set<Note> notes) {
         this.notes = notes;
     }
+
 
     
     
