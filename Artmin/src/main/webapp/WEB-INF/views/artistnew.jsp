@@ -26,7 +26,15 @@
                 height: 150px;  
             }
 
+            h6 {
+                display: inline-block;
+            }
 
+            .inline-form {
+                display: inline-block;
+                max-width: 30px;
+                width: auto;
+            }
 
         </style>
 
@@ -118,7 +126,48 @@
                 </fieldset>
             </form:form>
 
+            <hr>
+
         </div>
- 
+        <div class="col-lg">
+            <c:choose>
+                <c:when test="${users.size() <= 0}">
+                    <h4>No linked users.</h4>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach items="${users}" var="user">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col">
+                                    <h6><c:out value="${user.name}"/></h6>
+                                    <form:form method="POST" modelAttribute="user" class="inline-form">
+                                        <fieldset> 
+                                            <button type="submit" class="btn btn-danger btn-xs" name="removeUser" value=${user.id}><i class="material-icons small">clear</i></button>             
+                                        </fieldset>
+                                    </form:form>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+
+            <hr>
+            
+            <form:form method="POST" modelAttribute="user">
+                <fieldset>
+                    <div class="form-group">
+                        <label>User email</label>
+                        <form:input path="email" id="email" class="form-control" placeholder="Type here the users email."/>
+                    </div>  
+
+                    <!-- SUBMIT BUTTON -->
+                    <!-- SUBMIT BUTTON -->
+                    <!-- SUBMIT BUTTON -->
+                    <button type="submit" class="btn btn-primary btn-block" name="addUser">Add User</button>
+                </fieldset>
+            </form:form>
+        </div>
   </div>
 </html>

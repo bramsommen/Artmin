@@ -9,6 +9,7 @@ import artmin.model.User;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,6 +28,10 @@ public class UserDao extends AbstractDao<Long, User>{
         persist(user);
     }
 
+    public void deleteUser(User user) {
+        delete(user);
+    }
+
     public void deleteUserById(Long id) {
         Query query = getSession().createSQLQuery("delete from user where id = :id");
         query.setLong("id", id);
@@ -36,6 +41,13 @@ public class UserDao extends AbstractDao<Long, User>{
     @SuppressWarnings("unchecked")
     public List<User> findAllUsers() {
         Criteria criteria = createEntityCriteria();
+        return (List<User>) criteria.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<User> findByEmail(String email) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("email", email));
         return (List<User>) criteria.list();
     }
     

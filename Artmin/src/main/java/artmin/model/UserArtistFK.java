@@ -10,8 +10,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author m0317426
- * class used to solve M/M relations. Used for UserArtist.
+ * TODO REMOVE UNUSED
  */
 
 @Embeddable

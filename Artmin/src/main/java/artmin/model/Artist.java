@@ -5,7 +5,10 @@
  */
 package artmin.model;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +16,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -59,6 +65,32 @@ public class Artist {
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name="artistID")
     private Set<EventType> eventTypes;
+
+    @ManyToMany(
+        fetch = FetchType.EAGER,
+        cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    @JoinTable(name = "Artist_User",
+        joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
+    )
+    private Set<User> users = new HashSet<>();
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+        user.getArtists().add(this);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        user.getArtists().remove(this);
+    }
     
     public Long getId() {    
         return id;

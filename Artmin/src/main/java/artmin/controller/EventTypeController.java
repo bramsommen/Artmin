@@ -2,29 +2,24 @@
 // Created: 21/12/2019
 package artmin.controller;
 
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import artmin.model.Artist;
 import artmin.model.Event;
 import artmin.model.EventType;
 import artmin.service.ArtistService;
 import artmin.service.EventService;
 import artmin.service.EventTypeService;
-import java.util.Date;
-
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.Locale;
-import javax.swing.JOptionPane;
-
-import javax.validation.Valid;
-
-import org.springframework.context.MessageSource;
-import org.springframework.validation.BindingResult;
 
 @Controller
 @RequestMapping("/eventtypes")

@@ -1,6 +1,7 @@
 package artmin.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import artmin.dao.ArtistDao;
 import artmin.model.Artist;
 import artmin.model.Event;
 import artmin.model.EventLocation;
+import artmin.model.User;
 
 @Service("artistService")
 @Transactional
@@ -44,6 +46,10 @@ public class ArtistService {
         }
     }
 
+    public void saveOrUpdate(Artist artist) {
+        dao.updateArtist(artist);
+    }
+
     // verwijderen van gebruiker
     public void deleteArtistById(Long id) {
         // Eerst alle onnderliggende events verwijderen.
@@ -69,5 +75,9 @@ public class ArtistService {
     // zoeken van alle gebruikers
     public List<Artist> findAllArtists() {
         return dao.findAllArtists();
+    }
+    
+    public Set<User> getAllMatchingUsers(Long id) {
+        return dao.findAllMatchingUsers(id);
     }
 }

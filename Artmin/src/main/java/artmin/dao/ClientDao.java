@@ -5,14 +5,14 @@
  */
 package artmin.dao;
 
-import artmin.model.Client;
-import artmin.model.EventLocation;
 import java.util.List;
+
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import artmin.model.Client;
 
 /**
  *

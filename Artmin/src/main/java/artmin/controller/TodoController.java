@@ -1,15 +1,7 @@
 package artmin.controller;
 
-import artmin.model.Artist;
-import artmin.model.Todo;
-import artmin.model.Event;
-import artmin.model.Note;
-import artmin.service.ArtistService;
-import artmin.service.EventService;
-import artmin.service.NoteService;
-import artmin.service.TodoService;
-
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,6 +9,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import artmin.model.Event;
+import artmin.model.Todo;
+import artmin.service.ArtistService;
+import artmin.service.EventService;
+import artmin.service.NoteService;
+import artmin.service.TodoService;
 
 @Controller
 @RequestMapping("/todos")
